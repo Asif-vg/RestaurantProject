@@ -1,0 +1,97 @@
+﻿@model VmBlog
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content -->
+			<div class="content">
+				<div class="container">
+					<!-- Blog Posts -->
+					<div class="blog-page">
+						<div class="row">
+                            <div class="col-lg-9 col-md-8 padding-right-30">
+                                <!-- Blog Post -->
+                                @foreach (var blog in Model.Blogs)
+                                 {
+                                    <div class="card card-lift--hover shadow border-0 mb-4">
+                                        <img class="img-fluid" src="~/Uploads/@blog.Image" alt="image">
+                                        <div class="card-body py-4">
+                                            <h5 class="text-primary">@blog.Title</h5>
+                                            <p class="text-primary">@blog.CreatedDate.ToString("dd MMMM yyy")</p>
+                                            <p class="description mt-3">@Html.Raw(blog.Content.Length > 150 ? blog.Content.Substring(0, 150) + "..." : blog.Content)</p>
+                                            <a class="btn btn-primary" asp-controller="Blog" asp-action="Details" asp-route-id="@blog.Id">Read More</a>
+                                        </div>
+                                    </div>
+
+                                 }
+                            </div>
+							<!-- Blog Posts / End -->
+							<!-- Widgets -->
+							<div class="col-lg-3 col-md-4">
+								<div class="sidebar right">
+									<!-- Widget -->
+									<div class="widget">
+										<div class="form-group">
+											<div class="input-group mb-4">
+												<div class="input-group-prepend">
+													<span class="input-group-text"><i class="fa fa-search"></i></span>
+												</div>
+												<input class="form-control" placeholder="Search" type="text">
+											</div>
+										</div>
+									</div>
+									<div class="widget margin-top-40">
+										<h3>Popular Posts</h3>
+                                        <ul class="widget-tabs">
+                                            <!-- Post #1 -->
+                                            @foreach (var blog in Model.Blogs)
+                                             {
+                                                <li>
+                                                    <div class="widget-content">
+                                                        <div class="widget-thumb">
+                                                            <a href="#"><img src="~/Uploads/@blog.Image" alt="image"></a>
+                                                        </div>
+                                                        <div class="widget-text">
+                                                            <h5><a href="#">@blog.Title </a></h5>
+                                                            <span>@blog.CreatedDate.ToString("dd MMMM yyy")</span>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                </li>
+
+                                             }
+
+
+                                        </ul>
+									</div>
+									<!-- Widget / End-->
+									<!-- Widget -->
+									<div class="widget margin-top-40">
+										<h3 class="margin-bottom-25">Social</h3>
+										<div class="btn-wrapper">
+											<a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow us">
+												<i class="fa fa-twitter"></i>
+											</a>
+											<a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg" data-toggle="tooltip" data-original-title="Like us">
+												<i class="fa fa-facebook-square"></i>
+											</a>
+											<a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-dribbble btn-lg btn-round" data-toggle="tooltip" data-original-title="Follow us">
+												<i class="fa fa-dribbble"></i>
+											</a>
+											<a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-github btn-round btn-lg" data-toggle="tooltip" data-original-title="Star on Github">
+												<i class="fa fa-github"></i>
+											</a>
+										</div>
+									</div>
+									<!-- Widget / End-->
+									<div class="clearfix"></div>
+									<div class="margin-bottom-40"></div>
+								</div>
+							</div>
+						</div>
+						<!-- Sidebar / End -->
+					</div>
+				</div>
+			</div>
+
