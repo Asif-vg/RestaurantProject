@@ -29,24 +29,28 @@
 							<!-- Blog Posts / End -->
 							<!-- Widgets -->
 							<div class="col-lg-3 col-md-4">
-								<div class="sidebar right">
-									<!-- Widget -->
-									<div class="widget">
-										<div class="form-group">
-											<div class="input-group mb-4">
-												<div class="input-group-prepend">
-													<span class="input-group-text"><i class="fa fa-search"></i></span>
-												</div>
-												<input class="form-control" placeholder="Search" type="text">
-											</div>
-										</div>
-									</div>
-									<div class="widget margin-top-40">
-										<h3>Popular Posts</h3>
+                                <div class="sidebar right">
+                                    <!-- Widget -->
+                                    <form asp-controller="Blog" asp-action="Index" method="get">
+
+                                        <div class="widget">
+                                            <div class="form-group">
+                                                <div class="input-group mb-4">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                                    </div>
+                                                    <input class="form-control" asp-for="@Model.Search.searchData" placeholder="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <div class="widget margin-top-40">
+                                        <h3>Popular Posts</h3>
                                         <ul class="widget-tabs">
                                             <!-- Post #1 -->
                                             @foreach (var blog in Model.Blogs)
-                                             {
+                                            {
                                                 <li>
                                                     <div class="widget-content">
                                                         <div class="widget-thumb">
@@ -60,34 +64,34 @@
                                                     </div>
                                                 </li>
 
-                                             }
+                                            }
 
 
                                         </ul>
-									</div>
-									<!-- Widget / End-->
-									<!-- Widget -->
-									<div class="widget margin-top-40">
-										<h3 class="margin-bottom-25">Social</h3>
-										<div class="btn-wrapper">
-											<a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow us">
-												<i class="fa fa-twitter"></i>
-											</a>
-											<a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg" data-toggle="tooltip" data-original-title="Like us">
-												<i class="fa fa-facebook-square"></i>
-											</a>
-											<a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-dribbble btn-lg btn-round" data-toggle="tooltip" data-original-title="Follow us">
-												<i class="fa fa-dribbble"></i>
-											</a>
-											<a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-github btn-round btn-lg" data-toggle="tooltip" data-original-title="Star on Github">
-												<i class="fa fa-github"></i>
-											</a>
-										</div>
-									</div>
-									<!-- Widget / End-->
-									<div class="clearfix"></div>
-									<div class="margin-bottom-40"></div>
-								</div>
+                                    </div>
+                                    <!-- Widget / End-->
+                                    <!-- Widget -->
+                                    <div class="widget margin-top-40">
+                                        <h3 class="margin-bottom-25">Social</h3>
+                                        <div class="btn-wrapper">
+                                            <a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow us">
+                                                <i class="fa fa-twitter"></i>
+                                            </a>
+                                            <a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg" data-toggle="tooltip" data-original-title="Like us">
+                                                <i class="fa fa-facebook-square"></i>
+                                            </a>
+                                            <a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-dribbble btn-lg btn-round" data-toggle="tooltip" data-original-title="Follow us">
+                                                <i class="fa fa-dribbble"></i>
+                                            </a>
+                                            <a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-github btn-round btn-lg" data-toggle="tooltip" data-original-title="Star on Github">
+                                                <i class="fa fa-github"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- Widget / End-->
+                                    <div class="clearfix"></div>
+                                    <div class="margin-bottom-40"></div>
+                                </div>
 							</div>
 						</div>
 						<!-- Sidebar / End -->

@@ -21,6 +21,7 @@ namespace DirectList.Data
         public DbSet<BlogComment> BlogComments { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<DreamPlan> DreamPlans { get; set; }
         public DbSet<FeatureToRestaurant> FeatureToRestaurants { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<MenuToRestaurant> MenuToRestaurants { get; set; }
@@ -29,6 +30,8 @@ namespace DirectList.Data
         public DbSet<RestaurantFeatures> RestaurantFeaturess { get; set; }
         public DbSet<RestaurantImage> RestaurantImages { get; set; }
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<StepStart> Steps { get; set; }
+
         public DbSet<Social> Socials { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<TagToRestaurant> TagToRestaurants { get; set; }

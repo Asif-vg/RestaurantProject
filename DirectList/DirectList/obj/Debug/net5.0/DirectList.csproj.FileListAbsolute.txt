@@ -167,3 +167,12 @@ C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Ra
 C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\Social\Index.cshtml.g.cs
 C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\Social\Create.cshtml.g.cs
 C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\Social\Update.cshtml.g.cs
+C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\Dream\Index.cshtml.g.cs
+C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\Dream\Create.cshtml.g.cs
+C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\Dream\Update.cshtml.g.cs
+C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\Step\Index.cshtml.g.cs
+C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\Step\Create.cshtml.g.cs
+C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\Step\Update.cshtml.g.cs
+C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\About\Index.cshtml.g.cs
+C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\About\Create.cshtml.g.cs
+C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\obj\Debug\net5.0\Razor\Areas\admin\Views\About\Update.cshtml.g.cs

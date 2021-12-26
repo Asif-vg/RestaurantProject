@@ -54,18 +54,6 @@
                                             <td>@blog.Title</td>
                                             <td>@blog.CreatedDate</td>
                                             <td>@Html.Raw(blog.Content.Length > 300 ? blog.Content.Substring(0, 300) + "..." : blog.Content)</td>
-
-
-
-
-
-
-
-
-
-
-
-
                                             <td>
                                                 <a asp-area="Admin" asp-controller="Blog" asp-action="Update" asp-route-id="@blog.Id" class="btn btn-success">Update</a>
                                                 <a asp-area="Admin" asp-controller="Blog" asp-action="Delete" asp-route-id="@blog.Id" onclick="return confirm('Are you sure')" class="btn btn-danger">Delete</a>

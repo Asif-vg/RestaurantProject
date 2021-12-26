@@ -26,6 +26,11 @@ namespace DirectList.Controllers
             ViewBag.Name= "Home";
             VmHome model = new VmHome()
             {
+                Setting = _context.Settings.FirstOrDefault(),
+                Socials =_context.Socials.ToList(),
+                Restaurants=_context.Restaurants.ToList(),
+                Blogs=_context.Blogs.ToList(),
+                DreamPlans =_context.DreamPlans.ToList()
             };
             return View(model);
         }

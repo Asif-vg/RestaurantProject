@@ -1,4 +1,4 @@
-﻿@model Contact
+﻿@model VmContact
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,14 +18,17 @@
                 </div>
                     <div class="contact-form-wrapper">
                         <form asp-controller="Contact" asp-action="Message" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+
                             <div class="row">
+
                                 <div class="col-lg-6">
                                     <div class="form-group mb-4">
                                         <div class="input-group input-group-alternative">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-user-run"></i></span>
                                             </div>
-                                            <input class="form-control" placeholder="First Name" asp-for="@Model.FName">
+                                            <input class="form-control" placeholder="First Name" asp-for="@Model.Contact.FName">
                                         </div>
                                     </div>
                                 </div>
@@ -35,7 +38,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-user-run"></i></span>
                                             </div>
-                                            <input class="form-control" placeholder="Last Name" asp-for="@Model.LName">
+                                            <input class="form-control" placeholder="Last Name" asp-for="@Model.Contact.LName">
                                         </div>
                                     </div>
                                 </div>
@@ -45,7 +48,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                             </div>
-                                            <input class="form-control" placeholder="Email address" asp-for="@Model.Email">
+                                            <input class="form-control" placeholder="Email address" asp-for="@Model.Contact.Email">
                                         </div>
                                     </div>
                                 </div>
@@ -55,13 +58,13 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-user-run"></i></span>
                                             </div>
-                                            <input class="form-control" placeholder="Subject" asp-for="@Model.Subject">
+                                            <input class="form-control" placeholder="Subject" asp-for="@Model.Contact.Subject">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group mb-4">
-                                <textarea class="form-control form-control-alternative" rows="4" cols="80" placeholder="Type a message..." asp-for="@Model.Text"></textarea>
+                                <textarea class="form-control form-control-alternative" rows="4" cols="80" placeholder="Type a message..." asp-for="@Model.Contact.Text"></textarea>
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary btn-round btn-block btn-lg">Send Message</button>
@@ -78,19 +81,19 @@
                     <div class="col-lg-4 col-md-12 mb-4">
                         <div class="contact-media">
                             <i class="fa fa-map-marker"></i><span>Address:</span>
-                            <p>423B, Road Wordwide Country, USA</p>
+                            <p>@Model.Setting.Address1</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="contact-media">
                             <i class="fa fa-envelope"></i><span>Email Address</span><a href="#">
-                                htinfotech7@gmail.com
+                               @Model.Setting.Email2
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="contact-media">
-                            <i class="fa fa-phone"></i><span>Phone Number</span><a href="#">+01-1234-567-8900</a>
+                            <i class="fa fa-phone"></i><span>Phone Number</span><a href="#">@Model.Setting.Phone2</a>
                         </div>
                     </div>
                 </div>

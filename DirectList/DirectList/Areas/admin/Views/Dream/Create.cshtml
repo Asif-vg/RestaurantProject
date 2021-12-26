@@ -1,0 +1,54 @@
+﻿@model DreamPlan
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+
+            <form asp-area="Admin" asp-controller="Dream" asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+
+                <div class="mb-3">
+                    <label asp-for="@Model.SubTitle" class="form-label">SubTitle</label>
+                    <input class="form-control" asp-for="@Model.SubTitle">
+                    <span asp-validation-for="@Model.SubTitle" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.SubContent" class="form-label">SubContent</label>
+                    <textarea class="form-control" asp-for="@Model.SubContent" rows="3"></textarea>
+                    <span asp-validation-for="@Model.SubContent" class="text-danger"></span>
+                </div>
+
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Icon" class="form-label">Icon</label>
+                    <input class="form-control" asp-for="@Model.Icon">
+                    <span asp-validation-for="@Model.Icon" class="text-danger"></span>
+                </div>
+
+
+                <div class="mb-3">
+                    <label asp-for="@Model.CreatedDate" class="form-label">CreatedDate</label>
+                    <input class="form-control" asp-for="@Model.CreatedDate">
+                    <span asp-validation-for="@Model.CreatedDate" class="text-danger"></span>
+                </div>
+
+                
+
+
+
+
+                <button type="submit" class="btn btn-primary">Create</button>
+                <a asp-area="Admin" asp-controller="Dream" asp-action="Index" class="btn btn-primary">Back to list</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+

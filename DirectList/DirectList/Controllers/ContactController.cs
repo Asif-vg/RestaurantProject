@@ -1,5 +1,6 @@
 ﻿using DirectList.Data;
 using DirectList.Models;
+using DirectList.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,16 @@ namespace DirectList.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            VmContact model = new VmContact()
+            {
+                Setting = _context.Settings.FirstOrDefault(),
+                Socials = _context.Socials.ToList()
+            };
+            return View(model);
         }
         public IActionResult Message()
         {
+            
             return View();
         }
         [HttpPost]
@@ -35,7 +42,11 @@ namespace DirectList.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Index");
 
+
+
             }
+            ModelState.AddModelError("", "You can enter your information");
+
             return View("Index", model);
         }
     }

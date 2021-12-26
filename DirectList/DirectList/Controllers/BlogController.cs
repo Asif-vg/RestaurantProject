@@ -18,21 +18,31 @@ namespace DirectList.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(VmSearch search)
         {
             VmBlog blog = new VmBlog()
             {
                 Blogs = _context.Blogs.Include(bc => bc.BlogComments).ToList(),
                 Setting = _context.Settings.FirstOrDefault(),
                 Socials = _context.Socials.ToList()
+                
             };
+            blog.Blogs = _context.Blogs.Include(bc => bc.BlogComments)
+                                    .Where(b => (search.searchData != null ? b.Title.Contains(search.searchData) : true)).ToList();
+            blog.Search = search;
             return View(blog);
         }
 
         public IActionResult Details(int id)
         {
-            
-            return View(_context.Blogs.Include(bc => bc.BlogComments).FirstOrDefault(p => p.Id==id));
+            VmDBlog blog = new VmDBlog()
+            {
+                Blog = _context.Blogs.Include(bc => bc.BlogComments).FirstOrDefault(p => p.Id == id),
+                Setting = _context.Settings.FirstOrDefault(),
+                Socials = _context.Socials.ToList()
+            };
+
+            return View(blog);
         }
     }
 }

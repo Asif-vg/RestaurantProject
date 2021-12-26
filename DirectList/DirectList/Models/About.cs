@@ -16,6 +16,8 @@ namespace DirectList.Models
         public string Title { get; set; }
         [MaxLength(2000)]
         public string Content { get; set; }
+        [MaxLength(2000)]
+        public string Content2 { get; set; }
         [MaxLength(250)]
         public string Image { get; set; }
         [NotMapped]

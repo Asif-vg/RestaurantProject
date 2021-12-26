@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DirectList.Data;
+using DirectList.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,21 @@ namespace DirectList.Controllers
 {
     public class RestaurantController : Controller
     {
+
+        private readonly AppDbContext _context;
+
+        public RestaurantController(AppDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
-            return View();
+            VmRestaurant model = new VmRestaurant()
+            {
+                Setting = _context.Settings.FirstOrDefault(),
+                Socials = _context.Socials.ToList()
+            };
+            return View(model);
         }
     }
 }

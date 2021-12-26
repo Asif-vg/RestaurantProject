@@ -222,27 +222,17 @@
     </div>
     <div class="container">
         <div class="row row-grid mt-5">
-            <div class="col-lg-4 text-center">
-                <div class="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
-                    <i class="fa fa-search"></i>
+            @foreach (var dream in Model.DreamPlans)
+             {
+                <div class="col-lg-4 text-center">
+                    <div class="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
+                        <i class="@dream.Icon"></i>
+                    </div>
+                    <h5 class="text-white mt-3">@dream.SubTitle</h5>
+                    <p class="text-white mt-3">@dream.SubContent</p>
                 </div>
-                <h5 class="text-white mt-3">Find Interesting Place</h5>
-                <p class="text-white mt-3">Proin dapibus nisl ornare diam varius tempus. Aenean a quam luctus, finibus tellus ut, convallis eros sollicitudin turpis.</p>
-            </div>
-            <div class="col-lg-4 text-center">
-                <div class="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
-                    <i class="fa fa-phone-square"></i>
-                </div>
-                <h5 class="text-white mt-3">Contact a Few Owners</h5>
-                <p class="text-white mt-3">Maecenas pulvinar, risus in facilisis dignissim, quam nisi hendrerit nulla, id vestibulum metus nullam viverra porta purus.</p>
-            </div>
-            <div class="col-lg-4 text-center">
-                <div class="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
-                    <i class="fa fa-user-plus"></i>
-                </div>
-                <h5 class="text-white mt-3">Make a Reservation</h5>
-                <p class="text-white mt-3">Faucibus ante, in porttitor tellus blandit et. Phasellus tincidunt metus lectus sollicitudin feugiat pharetra consectetur.</p>
-            </div>
+
+             }
         </div>
     </div>
 </div>
@@ -258,39 +248,22 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="row row-grid">
-                    <div class="col-lg-4">
-                        <div class="card card-lift--hover shadow border-0">
-                            <img class="img-fluid" src="assets/images/post-1.jpg" alt="list-logo">
-                            <div class="card-body py-4">
-                                <h5>Take a Look at Hotels for All Budgets</h5>
-                                <p>22 August 2018</p>
-                                <p class="description mb-4">Sed sed tristique nibh iam porta volutpat finibus. Donec in aliquet urneget mattis lorem. Pellentesque pellentesque</p>
-                                <a class="btn btn-primary" href="JavaScript:Void(0);">Read More</a>
+                    @foreach (var blog in Model.Blogs)
+                     {
+                        <div class="col-lg-4">
+                            <div class="card card-lift--hover shadow border-0">
+                                <img class="img-fluid" src="~/Uploads/@blog.Image" alt="list-logo">
+                                <div class="card-body py-4">
+                                    <h5>@blog.Title</h5>
+                                    <p>@blog.CreatedDate.ToString("dd MMMM yyy")</p>
+                                    <p class="description mb-4">@Html.Raw(blog.Content.Length > 150 ? blog.Content.Substring(0, 150) + "..." : blog.Content)</p>
+                                    <a class="btn btn-primary" asp-controller="Blog" asp-action="Details" asp-route-id="@blog.Id">Read More</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card card-lift--hover shadow border-0">
-                            <img class="img-fluid" src="assets/images/post-2.jpg" alt="list-logo">
-                            <div class="card-body py-4">
-                                <h5>The 50 Greatest Street Arts In London</h5>
-                                <p>22 August 2018</p>
-                                <p class="description mb-4">Sed sed tristique nibh iam porta volutpat finibus. Donec in aliquet urneget mattis lorem. Pellentesque pellentesque</p>
-                                <a class="btn btn-primary" href="JavaScript:Void(0);">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card card-lift--hover shadow border-0">
-                            <img class="img-fluid" src="assets/images/post-3.jpg" alt="list-logo">
-                            <div class="card-body py-4">
-                                <h5>The Best Cofee Shops In Sydney Neighborhoods</h5>
-                                <p>22 August 2018</p>
-                                <p class="description mb-4">Sed sed tristique nibh iam porta volutpat finibus. Donec in aliquet urneget mattis lorem. Pellentesque pellentesque</p>
-                                <a class="btn btn-primary" href="JavaScript:Void(0);">Read More</a>
-                            </div>
-                        </div>
-                    </div>
+
+                     }
+
                 </div>
             </div>
         </div>

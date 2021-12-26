@@ -1,4 +1,4 @@
-﻿@model Blog
+﻿@model VmDBlog
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,16 +14,16 @@
                     <!-- Blog Post -->
                     <div class="blog-post single-post">
                         <!-- Img -->
-                        <img class="post-img img-fluid" src="~/Uploads/@Model.Image" alt="image">
+                        <img class="post-img img-fluid" src="~/Uploads/@Model.Blog.Image" alt="image">
                         <!-- Content -->
                         <div class="post-content">
-                            <h3>@Model.Title</h3>
+                            <h3>@Model.Blog.Title</h3>
                             <ul class="post-meta">
-                                <li>@Model.CreatedDate.ToString("MMMM dd, yyyy")</li>
-                                <li><a>@Model.BlogComments</a></li>
+                                <li>@Model.Blog.CreatedDate.ToString("MMMM dd, yyyy")</li>
+                                <li><a>@Model.Blog.BlogComments</a></li>
                             </ul>
                             <p>
-                                @Model.Content
+                                @Model.Blog.Content
                             </p>
                         </div>
                     </div>

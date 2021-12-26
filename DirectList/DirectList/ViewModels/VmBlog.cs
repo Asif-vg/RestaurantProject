@@ -9,5 +9,7 @@ namespace DirectList.ViewModels
     public class VmBlog : VmLayout
     {
         public List<Blog> Blogs { get; set; }
+        public VmSearch  Search { get; set; }
+
     }
 }
