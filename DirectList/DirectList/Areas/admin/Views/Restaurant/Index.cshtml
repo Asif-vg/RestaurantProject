@@ -36,16 +36,14 @@
                         <th scope="col">#</th>
                         <th scope="col">Image</th>
                         <th scope="col">Name</th>
+                        @*<th scope="col">About</th>*@
                         <th scope="col">Address</th>
                         <th scope="col">Phone1</th>
                         <th scope="col">StartTime</th>
                         <th scope="col">EndTime</th>
                         <th scope="col">Tag</th>
-                        <th scope="col">Feature</th>
-                        <th scope="col">Menu</th>
-                        <th scope="col">CreatedDate</th>
-                        <th scope="col">AddressLocation</th>
-                        <th scope="col">LocationNote</th>
+                        <th scope="col">Capacity</th>
+                        <th scope="col">Website</th>
 
 
                         <th scope="col"></th>
@@ -58,43 +56,44 @@
                             i++;
                                         <tr>
                                             <th scope="row">@i</th>
-                                            <td>
+                                            <td style="width:200px;">
                                                 @foreach (var image in restaurant.RestaurantImages)
                                                 {
-                                                    <img src="~/Uploads/@image.Image" alt="Alternate Text" style="width: 150px" />
+                                                    <img src="~/Uploads/@image.Image" alt="Alternate Text" style="width: 50px" />
                                                 }
                                             </td>
-                                            <td>@restaurant.Name</td>
-                                            <td>@restaurant.Address</td>
-                                            <td>@restaurant.Phone1</td>
-                                            <td>@restaurant.StartTime</td>
-                                            <td>@restaurant.EndTime</td>
-                                            <td>
-                                                @foreach (var tagToRestaurant in restaurant.TagToRestaurants)
-                                                {
-                                                    <span>@tagToRestaurant.Tag.Name </span>
+                                            <td style="width:200px;">@restaurant.Name</td>
+                                          @*  <td style="width:200px;">@Html.Raw(restaurant.About.Length > 70 ? restaurant.About.Substring(0, 70) + "..." : restaurant.About)</td>*@
+
+                                            <td style="width:200px;">@restaurant.Address</td>
+
+                                            <td style="width:200px;">@restaurant.Phone1</td>
+                                            <td style="width:200px;">@restaurant.StartTime</td>
+                                            <td style="width:200px;">@restaurant.EndTime</td>
+                                            <td style="max-width:200px;">
+                                                @{
+                                                    if (restaurant.TagToRestaurants.Count > 0)
+                                                    {
+                                                        foreach (var tagToRestaurant in restaurant.TagToRestaurants)
+                                                        {
+
+                                                            if (tagToRestaurant.Tag != null)
+                                                            {
+                                                                <span>@tagToRestaurant.Tag.Name</span>
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             </td>
-                                            <td>
-                                                @foreach (var featureToRestaurant in restaurant.FeatureToRestaurants)
-                                                {
-                                                    <span>@featureToRestaurant.RestaurantFeatures.Name </span>
-                                                }
-                                            </td>
-                                            <td>
-                                                @foreach (var menu in restaurant.MenuToRestaurants)
-                                                {
-                                                    <span>@menu.Menu.ProductName </span>
-                                                }
-                                            </td>
-                                            <td>@restaurant.CreatedDate</td>
-                                            <td>@restaurant.AddressLocation</td>
-                                            <td>@restaurant.LocationNote</td>
+
+                                            <td style="width:200px;">@restaurant.Capacity</td>
+                                            <td style="width:50px;">@restaurant.Website</td>
 
 
+                                            
 
 
-                                            <td>
+                                            <td style="width:200px;">
                                                 <a asp-area="Admin" asp-controller="Restaurant" asp-action="Update" asp-route-id="@restaurant.Id" class="btn btn-success">Update</a>
                                                 <a asp-area="Admin" asp-controller="Restaurant" asp-action="Delete" asp-route-id="@restaurant.Id" onclick="return confirm('Are you sure')" class="btn btn-danger">Delete</a>
 

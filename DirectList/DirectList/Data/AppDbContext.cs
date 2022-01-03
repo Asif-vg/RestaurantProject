@@ -16,6 +16,8 @@ namespace DirectList.Data
         }
 
         public DbSet<About> Abouts { get; set; }
+        public DbSet<Adminstrator> Adminstrators { get; set; }
+
         public DbSet<Banner> Banner { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogComment> BlogComments { get; set; }

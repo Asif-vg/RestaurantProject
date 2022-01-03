@@ -47,6 +47,39 @@ namespace DirectList.Migrations
                     b.ToTable("Abouts");
                 });
 
+            modelBuilder.Entity("DirectList.Models.Adminstrator", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("Adminstrators");
+                });
+
             modelBuilder.Entity("DirectList.Models.Banner", b =>
                 {
                     b.Property<int>("Id")
@@ -111,21 +144,25 @@ namespace DirectList.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("ParentId")
+                    b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Subject")
+                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("Text")
+                        .IsRequired()
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
 
@@ -311,8 +348,7 @@ namespace DirectList.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("About")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ntext");
+                        .HasColumnType("ntext");
 
                     b.Property<string>("Address")
                         .HasMaxLength(250)
@@ -321,6 +357,9 @@ namespace DirectList.Migrations
                     b.Property<string>("AddressLocation")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<short>("Capacity")
+                        .HasColumnType("smallint");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -350,6 +389,10 @@ namespace DirectList.Migrations
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
@@ -769,6 +812,10 @@ namespace DirectList.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<string>("Surname")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<string>("Text")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
@@ -778,6 +825,17 @@ namespace DirectList.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.HasDiscriminator().HasValue("User");
+                });
+
+            modelBuilder.Entity("DirectList.Models.Adminstrator", b =>
+                {
+                    b.HasOne("DirectList.Models.Restaurant", "Restaurant")
+                        .WithMany("Adminstrators")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("DirectList.Models.BlogComment", b =>
@@ -790,9 +848,7 @@ namespace DirectList.Migrations
 
                     b.HasOne("DirectList.Models.BlogComment", "ParrentComment")
                         .WithMany()
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("Blog");
 
@@ -952,6 +1008,8 @@ namespace DirectList.Migrations
 
             modelBuilder.Entity("DirectList.Models.Restaurant", b =>
                 {
+                    b.Navigation("Adminstrators");
+
                     b.Navigation("Books");
 
                     b.Navigation("FeatureToRestaurants");

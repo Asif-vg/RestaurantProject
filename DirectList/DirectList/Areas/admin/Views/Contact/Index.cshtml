@@ -1,0 +1,42 @@
+﻿@model List<Contact>
+@{
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <a asp-controller="Contact" asp-action="SendMailAll" class="btn btn-success">Send mail</a>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Date</th>
+                        @*<th scope="col"></th>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0;
+                        foreach (var prd in Model)
+                        {
+                            i++;
+                            <tr>
+                                <th scope="row">@i</th>
+                                <td>@prd.Email</td>
+                                <td>@prd.CreatedDate.ToString("dd.MM.yyyy")</td>
+                                @*<td>
+                                    <a class="btn btn-success" asp-area="Admin" asp-controller="Contact" asp-action="Update" asp-route-id="@prd.Id">Update</a>
+                                    <a class="btn btn-danger" asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@prd.Id" onclick="return confirm('Are you sure?')">Delete</a>
+                                </td>*@
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

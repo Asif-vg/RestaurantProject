@@ -10,6 +10,14 @@ namespace DirectList.ViewModels
     {
         public List<Blog> Blogs { get; set; }
         public VmSearch  Search { get; set; }
+        public List<BlogComment> BlogComments { get; set; }
+        public BlogComment BlogComment { get; set; }
+        public Blog Blog { get; set; }
+        public User User { get; set; }
+
+
+
+
 
     }
 }

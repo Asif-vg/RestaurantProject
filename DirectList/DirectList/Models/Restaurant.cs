@@ -16,7 +16,7 @@ namespace DirectList.Models
         public string Name { get; set; }
         [MaxLength(250)]
         public string Address { get; set; }
-        [Column("ntext")]
+        [Column(TypeName = "ntext")]
         public string About { get; set; }
         [MaxLength(30)]
         public string Phone1 { get; set; }
@@ -24,6 +24,9 @@ namespace DirectList.Models
         public string Phone2 { get; set; }
         [MaxLength(30)]
         public string Phone3 { get; set; }
+        public short Capacity { get; set; }
+        [MaxLength(250)]
+        public string Website { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -31,7 +34,8 @@ namespace DirectList.Models
         public string AddressLocation { get; set; }
         [MaxLength(2000)]
         public string LocationNote { get; set; }
-
+        [NotMapped]
+        public List<IFormFile> RestaurantImageFile { get; set; }
 
         [NotMapped]
         public List<int> TagToRestaurantId { get; set; }
@@ -42,12 +46,21 @@ namespace DirectList.Models
         [NotMapped]
         public List<int> FeatureToRestaurantId { get; set; }
 
+        [NotMapped]
+        public List<int> Tags { get; set; }
+
+        [NotMapped]
+        public List<int> Features { get; set; }
+
         public List<RestaurantImage> RestaurantImages { get; set; }
         public List<RestaurantComment> RestaurantComments { get; set; }
         public List<TagToRestaurant> TagToRestaurants { get; set; }
         public List<FeatureToRestaurant> FeatureToRestaurants { get; set; }
         public List<MenuToRestaurant> MenuToRestaurants { get; set; }
         public List<Book> Books { get; set; }
+        public List<Adminstrator> Adminstrators { get; set; }
+
+
 
 
 

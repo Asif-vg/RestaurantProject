@@ -21591,3 +21591,12 @@ body {
   .listing-item-container.list-layout .listing-item {
     height: auto;
     display: block; } }
+
+ .heart{
+    color:white;
+    cursor:pointer;
+}
+
+.mostviewed-bg .myadded {
+    background-color: red !important;
+}

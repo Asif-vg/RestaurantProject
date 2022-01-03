@@ -1,6 +1,8 @@
 ﻿using DirectList.Data;
 using DirectList.Models;
+using DirectList.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,95 +26,63 @@ namespace DirectList.Areas.admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Restaurant> restaurants = _context.Restaurants
-                                                               .OrderByDescending(o => o.CreatedDate)
+            
+            List<Restaurant> model = _context.Restaurants.OrderByDescending(o => o.CreatedDate)
                                                                .Include(ri => ri.RestaurantImages)
                                                                .Include(tr => tr.TagToRestaurants).ThenInclude(t => t.Tag)
                                                                .Include(fr => fr.FeatureToRestaurants).ThenInclude(f => f.RestaurantFeatures)
                                                                .Include(mr => mr.MenuToRestaurants).ThenInclude(m => m.Menu)
                                                                .ToList();
-            return View(restaurants);
+            return View(model);
         }
 
         public IActionResult Create()
         {
             ViewBag.Feature = _context.RestaurantFeaturess.ToList();
             ViewBag.Tags = _context.Tags.ToList();
-            ViewBag.Menu = _context.MenuToRestaurants.ToList();
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(Restaurant model)
         {
-            foreach (var image in model.RestaurantImages)
+
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                _context.Restaurants.Add(model);
+                _context.SaveChanges();
+                foreach (var image in model.RestaurantImageFile)
                 {
-                    if (image.ImageFile.ContentType == "image/jpeg" || image.ImageFile.ContentType == "image/png")
+                    if (image.ContentType == "image/jpeg" || image.ContentType == "image/png")
                     {
-                        if (image.ImageFile.Length <= 2097152)
+                        if (image.Length <= 2097152)
                         {
 
                             //Create Blog
-                            string fileName = Guid.NewGuid() + "-" + DateTime.Now.ToString("yyyyMMddHHmmss") + "-" + image.ImageFile.FileName;
+                            string fileName = Guid.NewGuid() + "-" + DateTime.Now.ToString("yyyyMMddHHmmss") + "-" + image.FileName;
                             string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", fileName);
                             using (var stream = new FileStream(filePath, FileMode.Create))
                             {
-                                image.ImageFile.CopyTo(stream);
+                                image.CopyTo(stream);
                             }
 
-                            image.Image = fileName;
+                            RestaurantImage restaurantImage = new RestaurantImage();
+                            restaurantImage.Image = fileName;
+                            restaurantImage.RestaurantId = model.Id;
 
-                            _context.RestaurantImages.Add(image);
+                            _context.RestaurantImages.Add(restaurantImage);
                             _context.SaveChanges();
 
 
-                            //Create Tag to blog
-                            if (model.TagToRestaurantId != null && model.TagToRestaurantId.Count > 0)
-                            {
-                                foreach (var item in model.TagToRestaurantId)
-                                {
-                                    TagToRestaurant tagToRestaurant= new TagToRestaurant();
-                                    tagToRestaurant.TagId = item;
-                                    tagToRestaurant.RestaurantId = model.Id;
-                                    _context.TagToRestaurants.Add(tagToRestaurant);
-                                    _context.SaveChanges();
-                                }
-                            }
 
-                            if (model.MenuToRestaurantId != null && model.MenuToRestaurantId.Count > 0)
-                            {
-                                foreach (var item in model.MenuToRestaurantId)
-                                {
-                                    MenuToRestaurant menuToRestaurant = new MenuToRestaurant();
-                                    menuToRestaurant.MenuId = item;
-                                    menuToRestaurant.RestaurantId = model.Id;
-                                    _context.MenuToRestaurants.Add(menuToRestaurant);
-                                    _context.SaveChanges();
-                                }
-                            }
-
-                            if (model.FeatureToRestaurantId != null && model.FeatureToRestaurantId.Count > 0)
-                            {
-                                foreach (var item in model.FeatureToRestaurantId)
-                                {
-                                    FeatureToRestaurant featureToRestaurant = new FeatureToRestaurant();
-                                    featureToRestaurant.FeatureId = item;
-                                    featureToRestaurant.RestaurantId = model.Id;
-                                    _context.FeatureToRestaurants.Add(featureToRestaurant);
-                                    _context.SaveChanges();
-                                }
-                            }
-                            return RedirectToAction("Index");
-
+                            
                         }
+
                         else
                         {
                             ModelState.AddModelError("", "You can upload only less than 2 mb.");
                             ViewBag.Feature = _context.RestaurantFeaturess.ToList();
                             ViewBag.Tags = _context.Tags.ToList();
-                            ViewBag.Menu = _context.MenuToRestaurants.ToList();
                             return View(model);
                         }
                     }
@@ -121,146 +91,240 @@ namespace DirectList.Areas.admin.Controllers
                         ModelState.AddModelError("", "You can upload only .jpeg, .jpg and .png");
                         ViewBag.Feature = _context.RestaurantFeaturess.ToList();
                         ViewBag.Tags = _context.Tags.ToList();
-                        ViewBag.Menu = _context.MenuToRestaurants.ToList();
                         return View(model);
+                    }
+                }
+
+
+                //Create Tag to blog
+                if (model.TagToRestaurantId != null && model.TagToRestaurantId.Count > 0)
+                {
+                    foreach (var item in model.TagToRestaurantId)
+                    {
+                        TagToRestaurant tagToRestaurant = new TagToRestaurant();
+                        tagToRestaurant.TagId = item;
+                        tagToRestaurant.RestaurantId = model.Id;
+                        _context.TagToRestaurants.Add(tagToRestaurant);
+                    }
+                    _context.SaveChanges();
+
+                }
+
+                if (model.FeatureToRestaurantId != null && model.FeatureToRestaurantId.Count > 0)
+                {
+                    foreach (var item in model.FeatureToRestaurantId)
+                    {
+                        FeatureToRestaurant featureToRestaurant = new FeatureToRestaurant();
+                        featureToRestaurant.FeatureId = item;
+                        featureToRestaurant.RestaurantId = model.Id;
+                        _context.FeatureToRestaurants.Add(featureToRestaurant);
+                        _context.SaveChanges();
+                    }
+                }
+
+
+            }
+            ViewBag.Feature = _context.RestaurantFeaturess.ToList();
+            ViewBag.Tags = _context.Tags.ToList();
+        
+            return View(model);
+        }
+
+        public IActionResult Update(int? id)
+        {
+            Restaurant restaurant = _context.Restaurants
+                                                        .Include(t => t.TagToRestaurants).ThenInclude(tr => tr.Tag)
+                                                        .FirstOrDefault(i => i.Id == id);
+
+            restaurant.Tags = _context.TagToRestaurants.Where(t => t.RestaurantId == id).Select(r => r.TagId).ToList();
+            restaurant.Features = _context.FeatureToRestaurants.Where(fr => fr.RestaurantId == id).Select(r => r.FeatureId).ToList();
+
+            ViewBag.Tags = _context.Tags.ToList();
+            ViewBag.Feature = _context.RestaurantFeaturess.ToList();
+
+            return View(restaurant);
+        }
+        [HttpPost]
+        public IActionResult Update(Restaurant restaurant)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (restaurant.RestaurantImageFile != null)
+                {
+                    List<RestaurantImage> restaurantImages = _context.RestaurantImages.Where(ri => ri.RestaurantId == restaurant.Id).ToList();
+                    foreach (var Img in restaurantImages)
+                    {
+                        string oldPathName = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", Img.Image);
+
+                        if (!string.IsNullOrEmpty(oldPathName))
+                        {
+                            if (System.IO.File.Exists(oldPathName))
+                            {
+                                System.IO.File.Delete(oldPathName);
+                            }
+                        }
+                        _context.RestaurantImages.Remove(Img);
+                    }
+                    _context.SaveChanges();
+
+                    foreach (var item in restaurant.RestaurantImageFile)
+                    {
+
+                        if (item.ContentType == "image/png" || item.ContentType == "image/jpeg")
+                        {
+                            if (item.Length <= 2097152)
+                            {
+                                string fileName = Guid.NewGuid() + "-" + DateTime.Now.ToString("yyyyMMddHHmmSS") + "-" + item.FileName;
+                                string path = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", fileName);
+
+                                using (var stream = new FileStream(path, FileMode.Create))
+                                {
+                                    item.CopyTo(stream);
+                                }
+
+                                RestaurantImage restaurantImages1 = new RestaurantImage();
+                                restaurantImages1.Image = fileName;
+                                restaurantImages1.RestaurantId = restaurant.Id;
+
+                                _context.RestaurantImages.Add(restaurantImages1);
+                                _context.SaveChanges();
+
+                            }
+                        }
+                    }
+
+                    List<TagToRestaurant> tagToRestaurants = _context.TagToRestaurants.Where(tr => tr.RestaurantId == restaurant.Id).ToList();
+
+                    foreach (var item in tagToRestaurants)
+                    {
+                        _context.TagToRestaurants.Remove(item);
+                    }
+                    _context.SaveChanges();
+
+                    List<FeatureToRestaurant> featuresToRestaurants = _context.FeatureToRestaurants.Where(fr => fr.RestaurantId == restaurant.Id).ToList();
+
+                    foreach (var item in featuresToRestaurants)
+                    {
+                        _context.FeatureToRestaurants.Remove(item);
+                    }
+                    _context.SaveChanges();
+
+                    if (restaurant.TagToRestaurantId != null && restaurant.TagToRestaurantId.Count > 0)
+                    {
+                        foreach (var item in restaurant.TagToRestaurantId)
+                        {
+                            TagToRestaurant tagToRestaurant = new TagToRestaurant();
+                            tagToRestaurant.TagId = item;
+                            tagToRestaurant.RestaurantId = restaurant.Id;
+                            _context.TagToRestaurants.Add(tagToRestaurant);
+                        }
+                        _context.SaveChanges();
+
+                    }
+
+                    if (restaurant.FeatureToRestaurantId != null && restaurant.FeatureToRestaurantId.Count > 0)
+                    {
+                        foreach (var item in restaurant.FeatureToRestaurantId)
+                        {
+                            FeatureToRestaurant featureToRestaurant = new FeatureToRestaurant();
+                            featureToRestaurant.FeatureId = item;
+                            featureToRestaurant.RestaurantId = restaurant.Id;
+                            _context.FeatureToRestaurants.Add(featureToRestaurant);
+                            _context.SaveChanges();
+                        }
+                    }
+
+
+                }
+                else
+                {
+                    List<TagToRestaurant> tagToRestaurants = _context.TagToRestaurants.Where(tr => tr.RestaurantId == restaurant.Id).ToList();
+
+                    foreach (var item in tagToRestaurants)
+                    {
+                        _context.TagToRestaurants.Remove(item);
+                    }
+                    _context.SaveChanges();
+
+                    if (restaurant.TagToRestaurantId != null && restaurant.TagToRestaurantId.Count > 0)
+                    {
+                        foreach (var item in restaurant.TagToRestaurantId)
+                        {
+                            TagToRestaurant tagToRestaurant = new TagToRestaurant();
+                            tagToRestaurant.TagId = item;
+                            tagToRestaurant.RestaurantId = restaurant.Id;
+                            _context.TagToRestaurants.Add(tagToRestaurant);
+                        }
+                        _context.SaveChanges();
+
+                    }
+
+                    List<FeatureToRestaurant> featuresToRestaurants = _context.FeatureToRestaurants.Where(fr => fr.RestaurantId == restaurant.Id).ToList();
+
+                    foreach (var item in featuresToRestaurants)
+                    {
+                        _context.FeatureToRestaurants.Remove(item);
+                    }
+                    _context.SaveChanges();
+
+                  
+                    if (restaurant.FeatureToRestaurantId != null && restaurant.FeatureToRestaurantId.Count > 0)
+                    {
+                        foreach (var item in restaurant.FeatureToRestaurantId)
+                        {
+                            FeatureToRestaurant featureToRestaurant = new FeatureToRestaurant();
+                            featureToRestaurant.FeatureId = item;
+                            featureToRestaurant.RestaurantId = restaurant.Id;
+                            _context.FeatureToRestaurants.Add(featureToRestaurant);
+                            _context.SaveChanges();
+                        }
+                    }
+
+                }
+                _context.Restaurants.Update(restaurant);
+                _context.SaveChanges();
+
+                return RedirectToAction("Index");
+
+            }
+
+
+            return View(restaurant);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                HttpContext.Session.SetString("NullIdError", "Id can not be null");
+                return RedirectToAction("Index");
+            }
+
+            Restaurant restaurant = _context.Restaurants.Find(id);
+            if (restaurant == null)
+            {
+                HttpContext.Session.SetString("NullDataError", "Can not found the data");
+                return RedirectToAction("Index");
+            }
+
+            //Delete old image
+            List<RestaurantImage> restaurantImages = _context.RestaurantImages.Where(ri => ri.RestaurantId == id).ToList();
+            foreach (var item in restaurantImages)
+            {
+                if (!string.IsNullOrEmpty(item.Image))
+                {
+                    string oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads",item.Image );
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
                     }
                 }
             }
 
-
-            ViewBag.Feature = _context.RestaurantFeaturess.ToList();
-            ViewBag.Tags = _context.Tags.ToList();
-            ViewBag.Menu = _context.MenuToRestaurants.ToList();
-            return View(model);
+            _context.Restaurants.Remove(restaurant);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
-
-
-        //public IActionResult Update(int? id)
-        //{
-        //    Blog model = _context.Blogs.Include(tb => tb.TagToBlogs).ThenInclude(t => t.Tag).FirstOrDefault(b => b.Id == id);
-        //    model.TagToBlogsId = _context.TagToBlogs.Where(tb => tb.BlogId == id).Select(a => a.TagId).ToList();
-        //    ViewBag.Category = _context.BlogCategories.ToList();
-        //    ViewBag.Tags = _context.Tags.ToList();
-        //    return View(model);
-        //}
-
-        //[HttpPost]
-        //public IActionResult Update(Blog model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (model.MainImageFile != null)
-        //        {
-        //            if (model.MainImageFile.ContentType == "image/jpeg" || model.MainImageFile.ContentType == "image/png")
-        //            {
-        //                if (model.MainImageFile.Length <= 2097152)
-        //                {
-        //                    //Delete old image
-        //                    if (!string.IsNullOrEmpty(model.MainImage))
-        //                    {
-        //                        string oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", model.MainImage);
-        //                        if (System.IO.File.Exists(oldImagePath))
-        //                        {
-        //                            System.IO.File.Delete(oldImagePath);
-        //                        }
-        //                    }
-
-        //                    //Create new image
-        //                    string fileName = Guid.NewGuid() + "-" + DateTime.Now.ToString("yyyyMMddHHmmss") + "-" + model.MainImageFile.FileName;
-        //                    string filePath = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", fileName);
-        //                    using (var stream = new FileStream(filePath, FileMode.Create))
-        //                    {
-        //                        model.MainImageFile.CopyTo(stream);
-        //                    }
-
-        //                    model.MainImage = fileName;
-        //                }
-        //                else
-        //                {
-        //                    ModelState.AddModelError("", "You can upload only less than 2 mb.");
-        //                    ViewBag.Category = _context.BlogCategories.ToList();
-        //                    ViewBag.Tags = _context.Tags.ToList();
-        //                    return View(model);
-        //                }
-        //            }
-        //            else
-        //            {
-        //                ModelState.AddModelError("", "You can upload only .jpeg, .jpg and .png");
-        //                ViewBag.Category = _context.BlogCategories.ToList();
-        //                ViewBag.Tags = _context.Tags.ToList();
-        //                return View(model);
-        //            }
-        //        }
-
-
-        //        _context.Blogs.Update(model);
-        //        _context.SaveChanges();
-
-        //        //Delete old data
-        //        List<TagToBlog> tagToBlogs = _context.TagToBlogs.Where(tb => tb.BlogId == model.Id).ToList();
-        //        foreach (var item in tagToBlogs)
-        //        {
-        //            _context.TagToBlogs.Remove(item);
-        //        }
-        //        _context.SaveChanges();
-
-        //        //Create new Tag to blog
-        //        if (model.TagToBlogsId != null && model.TagToBlogsId.Count > 0)
-        //        {
-        //            foreach (var item in model.TagToBlogsId)
-        //            {
-        //                TagToBlog tagToBlog = new TagToBlog();
-        //                tagToBlog.TagId = item;
-        //                tagToBlog.BlogId = model.Id;
-        //                _context.TagToBlogs.Add(tagToBlog);
-        //            }
-
-        //            _context.SaveChanges();
-        //        }
-        //        return RedirectToAction("Index");
-
-        //    }
-
-        //    ViewBag.Category = _context.BlogCategories.ToList();
-        //    ViewBag.Tags = _context.Tags.ToList();
-        //    return View(model);
-        //}
-
-
-        //public IActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        ///
-        //    }
-
-        //    Blog blog = _context.Blogs.Find(id);
-
-        //    if (blog == null)
-        //    {
-        //        ///
-        //    }
-
-        //    //Delete old image
-        //    if (!string.IsNullOrEmpty(blog.MainImage))
-        //    {
-        //        string oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, "Uploads", blog.MainImage);
-        //        if (System.IO.File.Exists(oldImagePath))
-        //        {
-        //            System.IO.File.Delete(oldImagePath);
-        //        }
-        //    }
-
-        //    //List<TagToBlog> tagToBlogs = _context.TagToBlogs.Where(t=>t.BlogId==id).ToList();
-        //    //foreach (var item in tagToBlogs)
-        //    //{
-        //    //    _context.TagToBlogs.Remove(item);
-        //    //}
-        //    //_context.SaveChanges();
-
-        //    _context.Blogs.Remove(blog);
-        //    _context.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
     }
 }

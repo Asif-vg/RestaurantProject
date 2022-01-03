@@ -1,0 +1,73 @@
+﻿@model List<MenuToRestaurant>
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-primary mb-3" asp-area="Admin" asp-controller="MenuRestaurant" asp-action="Create">Create</a>
+        </div>
+
+        <div class="col-lg-12">
+            @if (HttpContextAccessor.HttpContext.Session.GetString("NullIdError") != null)
+            {
+                <div class="alert alert-danger">
+                    @HttpContextAccessor.HttpContext.Session.GetString("NullIdError")
+                </div>
+                HttpContextAccessor.HttpContext.Session.Remove("NullIdError");
+            }
+
+            @if (HttpContextAccessor.HttpContext.Session.GetString("NullDataError") != null)
+            {
+                <div class="alert alert-danger">
+                    @HttpContextAccessor.HttpContext.Session.GetString("NullDataError")
+                </div>
+                HttpContextAccessor.HttpContext.Session.Remove("NullDataError");
+            }
+        </div>
+        <hr />
+        <div class="col-lg-12 mt-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Spices</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">MenuName</th>
+                        <th scope="col">RestaurantName</th>
+                        <th scope="col"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0;
+                        foreach (var mr in Model)
+                        {
+                            i++;
+                                        <tr>
+                                            <th scope="row">@i</th>
+                                            <td>@mr.Spices</td>
+                                            <td>@mr.Price</td>
+                                            <td>@mr.Menu.ProductName</td>
+                                            <td>@mr.Restaurant.Name</td>
+
+                                            <td>
+                                                <a asp-area="Admin" asp-controller="MenuRestaurant" asp-action="Update" asp-route-id="@mr.Id" class="btn btn-success">Update</a>
+                                                <a asp-area="Admin" asp-controller="MenuRestaurant" asp-action="Delete" asp-route-id="@mr.Id" onclick="return confirm('Are you sure')" class="btn btn-danger">Delete</a>
+
+                                            </td>
+                                        </tr>
+
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

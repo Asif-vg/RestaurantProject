@@ -165,12 +165,6 @@ namespace DirectList.Areas.admin.Controllers
                 }
             }
 
-            //List<TagToBlog> tagToBlogs = _context.TagToBlogs.Where(t=>t.BlogId==id).ToList();
-            //foreach (var item in tagToBlogs)
-            //{
-            //    _context.TagToBlogs.Remove(item);
-            //}
-            //_context.SaveChanges();
 
             _context.Blogs.Remove(blog);
             _context.SaveChanges();

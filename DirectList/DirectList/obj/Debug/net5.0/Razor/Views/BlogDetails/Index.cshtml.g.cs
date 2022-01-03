@@ -33,8 +33,15 @@ using DirectList.ViewModels;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 4 "C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Http;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"52edef9114f99e492cf6641420644b5236cc1dab", @"/Views/BlogDetails/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"cac4dbdf44387914202811f0197bdc701c163916", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"964494dd9b622aaffd2ab11fc0f07dc13b7fb31a", @"/Views/_ViewImports.cshtml")]
     public class Views_BlogDetails_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("id", new global::Microsoft.AspNetCore.Html.HtmlString("add-comment"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -187,7 +194,7 @@ using DirectList.ViewModels;
                         <h3 class=""listing-desc-headline mb-4"">Add Review</h3>
                         <!-- Review Comment -->
                         ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52edef9114f99e492cf6641420644b5236cc1dab12639", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52edef9114f99e492cf6641420644b5236cc1dab12840", async() => {
                 WriteLiteral(@"
                             <fieldset>
                                 <div class=""row"">

@@ -28,13 +28,27 @@ using DirectList.Models;
 #nullable disable
 #nullable restore
 #line 3 "C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\Areas\admin\Views\_ViewImports.cshtml"
+using DirectList.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 4 "C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\Areas\admin\Views\_ViewImports.cshtml"
 using Microsoft.AspNetCore.Http;
 
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\CASPER\Desktop\BackEndProject\DirectList\DirectList\Areas\admin\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ef07bf3a0564650fa168a08202d8af3cf4061a9c", @"/Areas/admin/Views/Social/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"2cadca8786574e5222abdb242ba76ee9e23f21e7", @"/Areas/admin/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"832f6faf32d012888263d9f2dc39f5df0b84a6f7", @"/Areas/admin/Views/_ViewImports.cshtml")]
     public class Areas_admin_Views_Social_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<List<Social>>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("btn btn-primary mb-3"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -80,7 +94,7 @@ using Microsoft.AspNetCore.Http;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n<div class=\"container\">\r\n    <div class=\"row\">\r\n        <div class=\"col-lg-12\">\r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ef07bf3a0564650fa168a08202d8af3cf4061a9c6736", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ef07bf3a0564650fa168a08202d8af3cf4061a9c7162", async() => {
                 WriteLiteral("Create");
             }
             );
@@ -210,7 +224,7 @@ using Microsoft.AspNetCore.Http;
 #line hidden
 #nullable disable
             WriteLiteral("</td>\r\n                                <td>\r\n                                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ef07bf3a0564650fa168a08202d8af3cf4061a9c12724", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ef07bf3a0564650fa168a08202d8af3cf4061a9c13150", async() => {
                 WriteLiteral("Update");
             }
             );
@@ -246,7 +260,7 @@ using Microsoft.AspNetCore.Http;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ef07bf3a0564650fa168a08202d8af3cf4061a9c15483", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ef07bf3a0564650fa168a08202d8af3cf4061a9c15909", async() => {
                 WriteLiteral("Delete");
             }
             );

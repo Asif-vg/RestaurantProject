@@ -1,11 +1,8 @@
 ﻿using DirectList.Data;
-using DirectList.Models;
 using DirectList.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DirectList.Controllers
 {
@@ -23,7 +20,8 @@ namespace DirectList.Controllers
             VmContact model = new VmContact()
             {
                 Setting = _context.Settings.FirstOrDefault(),
-                Socials = _context.Socials.ToList()
+                Socials = _context.Socials.ToList(),
+                Banner=_context.Banner.FirstOrDefault(b=>b.Page=="Contact")
             };
             return View(model);
         }
@@ -33,21 +31,23 @@ namespace DirectList.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Message(Contact model)
+        public IActionResult Message(VmContact model)
         {
             if (ModelState.IsValid)
             {
-                model.CreatedDate = DateTime.Now;
-                _context.Contacts.Add(model);
+                model.Contact.CreatedDate = DateTime.Now;
+                _context.Contacts.Add(model.Contact);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
 
-
-
             }
-            ModelState.AddModelError("", "You can enter your information");
+            VmContact model1 = new VmContact()
+            {
+                Setting = _context.Settings.FirstOrDefault(),
+                Socials = _context.Socials.ToList()
+            };
 
-            return View("Index", model);
+            return View("Index", model1);
         }
     }
 }

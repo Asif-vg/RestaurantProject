@@ -10,5 +10,6 @@ namespace DirectList.ViewModels
     {
         public List<Social> Socials { get; set; }
         public Setting Setting { get; set; }
+        public Banner Banner { get; set; }
     }
 }

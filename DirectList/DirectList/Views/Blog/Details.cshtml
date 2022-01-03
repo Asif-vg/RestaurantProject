@@ -1,8 +1,32 @@
-﻿@model VmDBlog
+﻿@model VmBlog
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+<div id="titlebar" class="gradient">
+    <div class="title-bar-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>@Model.Banner.Title</h2>
+                    <span>Explore your search places</span>
+                    <!-- Breadcrumbs -->
+                    <nav id="breadcrumbs">
+                        <ul>
+                            <li><a>Home</a></li>
+                            <li>@Model.Banner.Page</li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="title-overlay"></div>
+</div>
+
 
 <div class="content">
     <div class="container">
@@ -20,10 +44,10 @@
                             <h3>@Model.Blog.Title</h3>
                             <ul class="post-meta">
                                 <li>@Model.Blog.CreatedDate.ToString("MMMM dd, yyyy")</li>
-                                <li><a>@Model.Blog.BlogComments</a></li>
+                                <li><a>@Model.BlogComments.Count Comments</a></li>
                             </ul>
                             <p>
-                                @Model.Blog.Content
+                                @Html.Raw(Model.Blog.Content)
                             </p>
                         </div>
                     </div>
@@ -39,49 +63,31 @@
                     </ul>
                     <!-- About Author -->
                     <div class="about-author">
-                        <img src="assets/images/thumb-4.jpg" alt="image" />
+                        <img src="~/assets/images/avatar3.png" alt="image" />
                         <div class="about-description">
-                            <h4>Ethan Moore</h4>
-                            <p>Nullam ultricies, velit ut varius molestie, ante metus condimentum nisi, dignissim facilisis turpis ex in libero. Sed porta ante tortor, a pulvinar mi facilisis nec. Proin finibus dolor ac convallis congue.</p>
+                            <h4>@Model.User.Name</h4>
+                            <p>@Model.User.Text</p>
                         </div>
                     </div>
                     <div class="margin-top-50"></div>
                     <!-- Reviews -->
                     <section class="comments">
-                        <h4 class="headline margin-bottom-35">Comments <span class="comments-amount">(5)</span></h4>
-                        <div class="row py-4 list-img-wrap">
-                            <div class="col-md-2 list-img"><img class="img-fluid rounded-circle shadow-lg" src="assets/images/thumb-1.jpg" alt="image"></div>
-                            <div class="col-md-10">
-                                <h5 class="text-primary"> Loreta Lavine </h5>
-                                <p>15 Minutes Ago</p>
-                                <p>
-                                    Lorem Ipsum is simply dummy text of the pr make but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                    with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                                </p>
-                                <button class="btn btn-sm btn-primary" type="button">Reply</button>
+                        <h4 class="headline margin-bottom-35">Comments <span class="comments-amount">@Model.BlogComments.Count</span></h4>
+                        @foreach (var comment in Model.BlogComments)
+                        {
+                            <div class="row py-4 list-img-wrap">
+                                <div class="col-md-2 list-img"><img class="img-fluid rounded-circle shadow-lg" src="~/assets/images/avatar2.png" alt="image"></div>
+                                <div class="col-md-10">
+                                    <h5 class="text-primary"> @comment.Name </h5>
+                                    <p>
+
+                                    </p>
+                                    <p>@comment.Text </p>
+                                    <button class="btn btn-sm btn-primary" type="submit">Reply</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row py-4 list-img-wrap">
-                            <div class="col-md-2 list-img"><img class="img-fluid rounded-circle shadow-lg" src="assets/images/thumb-2.jpg" alt="image"></div>
-                            <div class="col-md-10">
-                                <h5 class="text-primary"> Kena Delatte </h5>
-                                <p>2 Days Ago</p>
-                                <p>Suspendisse enim nibh, ultricies id elit et, fermentum pellentesque neque. Curabitur at nibh finibus, facilisis lectus eu, ornare nulla. Morbi venenatis ex id diam laoreet vulputate</p>
-                                <button class="btn btn-sm btn-primary" type="button">Reply</button>
-                            </div>
-                        </div>
-                        <div class="row py-4 list-img-wrap">
-                            <div class="col-md-2 list-img"><img class="img-fluid rounded-circle shadow-lg" src="assets/images/thumb-3.jpg" alt="image"></div>
-                            <div class="col-md-10">
-                                <h5 class="text-primary"> Hilda Oatman </h5>
-                                <p>3 Days Ago</p>
-                                <p>
-                                    Proin rhoncus nulla dictum, volutpat sem sed, aliquam nisi. Sed lorem turpis, viverra eu lacinia id, pellentesque et mi. Quisque vitae tortor dui. Nullam ac eros tempus erat vulputate ultrices ac sed dui. Quisque malesuada lacus non est fringilla,
-                                    vitae finibus magna rutrum.
-                                </p>
-                                <button class="btn btn-sm btn-primary" type="button">Reply</button>
-                            </div>
-                        </div>
+                        }
+
                     </section>
                     <div class="clearfix"></div>
                     <!-- Add Comment -->
@@ -89,32 +95,33 @@
                         <!-- Add Review -->
                         <h3 class="listing-desc-headline mb-4">Add Review</h3>
                         <!-- Review Comment -->
-                        <form id="add-comment" class="add-comment">
+                        <form id="add-comment" class="add-comment" asp-controller="Blog" asp-action="Comment" method="post">
                             <fieldset>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Name" class="form-control form-control-alternative">
+                                            <input asp-for="@Model.BlogComment.Name" placeholder="Name" class="form-control form-control-alternative">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="email" placeholder="Email" class="form-control form-control-alternative">
+                                            <input type="email" asp-for="@Model.BlogComment.Email" placeholder="Email" class="form-control form-control-alternative">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Subject" class="form-control form-control-alternative">
+                                            <input type="text" asp-for="@Model.BlogComment.Subject" placeholder="Subject" class="form-control form-control-alternative">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="">
                                     <div class="form-group">
-                                        <textarea class="form-control form-control-alternative" placeholder="Comment" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <textarea class="form-control form-control-alternative" placeholder="Comment" id="exampleFormControlTextarea1" asp-for="@Model.BlogComment.Text" rows="3"></textarea>
                                     </div>
                                 </div>
                             </fieldset>
-                            <button class="mt-4 btn btn-primary">Submit Comment</button>
+                            <input type="hidden" asp-for="@Model.BlogComment.BlogId" value="@Model.Blog.Id" />
+                            <button type="submit" class="mt-4 btn btn-primary">Submit Comment</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -125,38 +132,41 @@
                 <div class="col-lg-3 col-md-4">
                     <div class="sidebar right">
                         <!-- Widget -->
-                        <div class="widget">
-                            <h3 class="margin-top-0 margin-bottom-25">Search Blog</h3>
-                            <div class="form-group">
-                                <div class="input-group mb-4">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                        <form asp-controller="Blog" asp-action="Index" method="get">
+                            <div class="widget">
+                                <h3 class="margin-top-0 margin-bottom-25">Search Blog</h3>
+                                <div class="form-group">
+                                    <div class="input-group mb-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                        </div>
+                                        <input class="form-control" placeholder="Search" asp-for="@Model.Search.searchData">
                                     </div>
-                                    <input class="form-control" placeholder="Search" type="text">
                                 </div>
                             </div>
-                        </div>
+                        </form>
+
                         <!-- Widget / End -->
                         <!-- Widget -->
                         <div class="widget mb-4">
                             <h3>Popular Posts</h3>
                             <ul class="widget-tabs">
-                                <!-- Post #1 -->
-                                @*@foreach (var blog in Model)
-                                    {
-                                       <li>
-                                           <div class="widget-content">
-                                               <div class="widget-thumb">
-                                                   <a href="pages-blog-post.html"><img src="~/Uploads/@Model.Image" alt="image"></a>
-                                               </div>
-                                               <div class="widget-text">
-                                                   <h5><a asp-controller="Blog" asp-action="Details">@Model.Content </a></h5>
-                                                   <span>@Model.CreatedDate.ToString("MMMM dd yyyy")</span>
-                                               </div>
-                                               <div class="clearfix"></div>
-                                           </div>
-                                       </li>
-                                    }*@
+                                 <!--Post1-->
+                                @foreach (var blog in Model.Blogs)
+                                {
+                                    <li>
+                                        <div class="widget-content">
+                                            <div class="widget-thumb">
+                                                <a href="pages-blog-post.html"><img src="~/Uploads/@blog.Image" alt="image"></a>
+                                            </div>
+                                            <div class="widget-text">
+                                                <h5><a asp-controller="Blog" asp-action="Details">@Html.Raw(blog.Content.Length > 15 ? blog.Content.Substring(0, 15) + "..." : blog.Content) </a></h5>
+                                                <span>@blog.CreatedDate.ToString("MMMM dd yyyy")</span>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </li>
+                                }
 
 
                             </ul>
@@ -166,18 +176,15 @@
                         <div class="widget margin-top-40">
                             <h3 class="margin-bottom-25">Follow Us</h3>
                             <div class=" btn-wrapper">
-                                <a target="_blank" href="https://twitter.com/" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow us">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                                <a target="_blank" href="https://www.facebook.com/" class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg" data-toggle="tooltip" data-original-title="Like us">
-                                    <i class="fa fa-facebook-square"></i>
-                                </a>
-                                <a target="_blank" href="https://dribbble.com/" class="btn btn-neutral btn-icon-only btn-dribbble btn-lg btn-round" data-toggle="tooltip" data-original-title="Follow us">
-                                    <i class="fa fa-dribbble"></i>
-                                </a>
-                                <a target="_blank" href="https://github.com/" class="btn btn-neutral btn-icon-only btn-github btn-round btn-lg" data-toggle="tooltip" data-original-title="Star on Github">
-                                    <i class="fa fa-github"></i>
-                                </a>
+                                @foreach (var social in Model.Socials)
+                                {
+                                    <a target="_blank" href="@social.Link" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow us">
+                                        <i class="@social.Icon"></i>
+                                    </a>
+                                }
+
+
+
                             </div>
                         </div>
                         <!-- Widget / End-->

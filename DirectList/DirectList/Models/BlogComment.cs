@@ -12,20 +12,26 @@ namespace DirectList.Models
     {
         [Key]
         public int Id { get; set; }
-        [MaxLength(250)]
+        [MaxLength(250), Required]
         public string Name { get; set; }
-        [MaxLength(2000)]
+
+        [MaxLength(2000), Required]
         public string Text { get; set; }
+
         public DateTime CreatedDate { get; set; }
-        [MaxLength(250)]
+
+        [MaxLength(250), Required]
         public string Subject { get; set; }
-        [MaxLength(50)]
+
+        [MaxLength(50), Required]
         public string Email { get; set; }
+
         [ForeignKey("Blog")]
         public int BlogId { get; set; }
         public Blog Blog { get; set; }
+
         [ForeignKey("ParrentComment")]
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
         public BlogComment ParrentComment { get; set; }
 
 

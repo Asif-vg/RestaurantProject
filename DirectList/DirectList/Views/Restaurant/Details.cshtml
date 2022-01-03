@@ -1,0 +1,274 @@
+﻿@model VmBook
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="titlebar" class="gradient">
+    <div class="title-bar-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>@Model.Banner.Title</h2>
+                    <span>Explore your search places</span>
+                    <!-- Breadcrumbs -->
+                    <nav id="breadcrumbs">
+                        <ul>
+                            <li><a>Home</a></li>
+                            <li>@Model.Banner.Page</li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="title-overlay"></div>
+</div>
+
+
+
+<!-- Content -->
+<div class="container">
+    <div class="content">
+        <div class="row sticky-wrapper">
+            <div class="col-lg-8 col-md-8">
+                <div class="">
+                    <div class="detail-tile mb-4">
+                        <h3>
+                            <span>@Model.Restaurant.Name </span>
+                            <span class=" text-uppercase">
+
+                                @if ((Model.Restaurant.StartTime.Hour < DateTime.Now.Hour && Model.Restaurant.StartTime.Minute <= DateTime.Now.Minute) && (Model.Restaurant.EndTime.Hour > DateTime.Now.Hour && Model.Restaurant.EndTime.Minute <= DateTime.Now.Minute))
+                                {
+
+
+                                    <span class="badge badge-pill badge-success">Open</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-pill badge-danger">Closed</span>
+                                }
+
+                            </span>
+                        </h3>
+                        <p>@Model.Restaurant.Address</p>
+                        @foreach (var tag in Model.Restaurant.TagToRestaurants)
+                        {
+                            <span class="badge badge-pill badge-info text-uppercase mr-2">@tag.Tag.Name</span>
+
+                        }
+                    </div>
+                    <div class="nav-wrapper">
+                        <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link mb-sm-3 mb-md-0 active show" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fa fa-info-circle mr-2"></i>About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fa fa-map-marker mr-2"></i>Location</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fa fa-money mr-2"></i>Pricing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fa fa-money mr-2"></i>Reviews</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                    <p>
+                                        @Model.Restaurant.About
+                                    </p>
+                                    <h4 class="mb-4">
+                                        Contact Info
+                                    </h4>
+                                    <div class="row mb-5">
+                                        <div class="col-lg-4">
+                                            <div class="detail-list mb-2">
+                                                <div class="detail-list-label mb-1">
+                                                    <i aria-hidden="true" class="fa fa-phone mr-2"></i>
+                                                    <small class="text-uppercase font-weight-bold">Reception.</small>
+                                                </div>
+                                                <p class="m-0 text-small"> @Model.Restaurant.Phone1</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="detail-list mb-2">
+                                                <div class="detail-list-label mb-1">
+                                                    <i aria-hidden="true" class="fa fa-phone mr-2"></i>
+                                                    <small class="text-uppercase font-weight-bold">For Complaints.</small>
+                                                </div>
+                                                <p class="m-0 text-small">@Model.Restaurant.Phone2</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="detail-list mb-2">
+                                                <div class="detail-list-label mb-1">
+                                                    <i aria-hidden="true" class="fa fa-phone mr-2"></i><small class="text-uppercase font-weight-bold">Support.</small>
+                                                </div>
+                                                <p class="m-0 text-small">@Model.Restaurant.Phone3</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="mb-4">Features</h4>
+                                    @foreach (var feature in Model.Restaurant.FeatureToRestaurants)
+                                    {
+                                        <span class="badge badge-pill badge-primary text-uppercase mr-2 mb-2">@feature.RestaurantFeatures.Name</span>
+
+                                    }
+                                </div>
+                                <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+                                    <p class="description">@Model.Restaurant.LocationNote</p>
+                                    <div>
+                                        <!-- <agm-map [latitude]="lat" [longitude]="lng" style="height: 300px">
+            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            </agm-map> -->
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                    <div class="pricing-list-container">
+                                        <ul>
+                                            @foreach (var item in Model.Restaurant.MenuToRestaurants)
+                                            {
+                                                <li>
+                                                    <h5>@item.Menu.ProductName</h5>
+                                                    <p>@item.Spices</p>
+                                                    <span>$@item.Price.ToString("#")</span>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
+                                    @foreach (var comments in Model.Restaurant.RestaurantComments)
+                                    {
+                                        <div class="row mb-4 list-img-wrap">
+                                            <div class="col-md-2 list-img">
+                                                <img class="img-fluid rounded-circle shadow-lg" src="~/assets/images/avatar2.png" alt="image">
+                                            </div>
+                                            <div class="col-md-10">
+                                                <h5 class="text-primary">@comments.Name</h5>
+                                                <p></p>
+                                                <p>
+                                                    @comments.Text
+                                                </p>
+                                                <button class="btn btn-sm btn-primary" type="submit">Helpful?</button>
+                                            </div>
+                                        </div>
+
+                                    }
+
+                                </div>
+                                <div id="add-review" class="add-review-box mt-4">
+                                    <!--Add Review-->
+                                    <h3 class="listing-desc-headline mb-4">Add Review</h3>
+                                    <!--Review Comment -->
+                                    <form id="add-comment" class="add-comment" asp-controller="Restaurant" asp-action="Comment" method="post">
+                                        <fieldset>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input asp-for="@Model.RestaurantComment.Name" placeholder="Name" class="form-control form-control-alternative">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input type="email" asp-for="@Model.RestaurantComment.Email" placeholder="Email" class="form-control form-control-alternative">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <input type="text" asp-for="@Model.RestaurantComment.Subject" placeholder="Subject" class="form-control form-control-alternative">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <div class="form-group">
+                                                    <textarea class="form-control form-control-alternative" placeholder="Comment" id="exampleFormControlTextarea1" asp-for="@Model.RestaurantComment.Text" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <input type="hidden" asp-for="@Model.RestaurantComment.RestaurantId" value="@Model.Restaurant.Id" />
+                                        <button type="submit" class="mt-4 btn btn-primary">Submit Comment</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="sticky">
+                    <!-- Book Now -->
+                    <form asp-controller="Restaurant" asp-action="Reserve" method="post">
+                        <div class="boxed-widget booking-widget">
+                            <div>
+                                <div class="form-group focused">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                        </div>
+                                        <input class="form-control" asp-for="@Model.Book.CreatedDate" placeholder="Start date" type="date">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control form-control-alternative custom-select" id="exampleFormControlSelect1" asp-for="@Model.Book.GuestCount">
+                                        <option selected>Guest</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                        <option value="4">Four</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input class="form-control" placeholder="FullName" asp-for="@Model.Book.FullName" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input class="form-control" placeholder="FIN" asp-for="@Model.Book.FIN" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Book Now -->
+                            <button type="submit" class="btn btn-1 btn-primary d-block">Book Now</button>
+
+                            <input asp-for="@Model.Restaurant.Id" hidden />
+
+                        </div>
+                    </form>
+
+                    <!--Book Now / End-->
+                    @foreach (var item in Model.Restaurant.Adminstrators)
+                    {
+                        <div class="boxed-widget bg-secondary mt-4 text-center p-4">
+                            <h4 class="mb-4">Key People</h4>
+                            <div class="mb-3">
+                                <div class="mb-2">
+                                    <img class="img-fluid rounded-circle shadow-lg" width="80" height="80" src="~/Uploads/@item.Image" alt="image">
+                                </div>
+                                <div class="">
+                                    <h5 class="text-primary">@item.Name</h5>
+                                </div>
+                            </div>
+                            <ul class="listing-details-sidebar">
+                                <li><i class="fa fa-phone"></i>@item.Phone</li>
+                                <li><i class="fa fa-external-link"></i> @Model.Restaurant.Website</li>
+                                <li><i class="fa fa-envelope-o"></i>@item.Email</li>
+                            </ul>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

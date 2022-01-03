@@ -1,0 +1,62 @@
+﻿@model Adminstrator
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+
+            <form asp-area="Admin" asp-controller="Adminstrator" asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="@Model.ImageFile" class="form-label">Image</label>
+                    <input class="form-control" asp-for="@Model.ImageFile">
+                    <span asp-validation-for="@Model.ImageFile" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Name" class="form-label">Name</label>
+                    <input class="form-control" asp-for="@Model.Name">
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Email" class="form-label">Email</label>
+                    <input class="form-control" asp-for="@Model.Email">
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Phone" class="form-label">Phone</label>
+                    <input class="form-control" asp-for="@Model.Phone">
+                    <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+                </div>
+
+                @*<div class="mb-3">
+                    <label asp-for="@Model.Restaurant.Website" class="form-label">Restaurant Website</label>
+                    <input class="form-control" asp-for="@Model.Restaurant.Website">
+                    <span asp-validation-for="@Model.Restaurant.Website" class="text-danger"></span>
+                </div>*@
+
+
+                <div class="mb-3">
+                    <label asp-for="@Model.RestaurantId" class="form-label">Restaurant Name</label>
+                    <select class="form-control mb-3 selectTwo" aria-label="Default select example" multiple asp-for="@Model.RestaurantId">
+                        @foreach (var item in ViewBag.Restaurant)
+                         {
+                            <option value="@item.Id">@item.Name</option>
+                         }
+                    </select>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Create</button>
+                <a asp-area="Admin" asp-controller="Adminstrator" asp-action="Index" class="btn btn-primary">Back to list</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+

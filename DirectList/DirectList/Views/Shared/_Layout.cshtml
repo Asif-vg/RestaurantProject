@@ -1,4 +1,16 @@
 ﻿@model VmLayout
+@inject IHttpContextAccessor _httpContextAccesssor
+
+@{ 
+    string oldData = _httpContextAccesssor.HttpContext.Request.Cookies["cart"];
+    int BasketCount = 0;
+
+    if (!string.IsNullOrEmpty(oldData))
+    {
+        BasketCount = oldData.Split("-").Length;
+    }
+}
+
 <!doctype html>
 <html lang="en">
 
@@ -15,9 +27,9 @@
     <!-- CSS
          ================================================== -->
     <link href="../maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/css/icon-font.css">
-    <link rel="stylesheet" href="assets/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="~/assets/css/icon-font.css">
+    <link rel="stylesheet" href="~/assets/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">
 </head>
 
 <body>
@@ -27,7 +39,7 @@
             <nav id="navbar-main" class="navbar navbar-main fixed-top navbar-expand-lg navbar-transparent navbar-light headroom">
                 <div class="container">
                     <div class="logo">
-                        <a><img src="assets/images/@Model.Setting.Logo" class="img-fluid" alt=""></a>
+                        <a asp-controller="Home" asp-action="Index"><img src="~/assets/images/@Model.Setting.Logo" class="img-fluid" alt=""></a>
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -48,7 +60,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="navbar-nav navbar-nav-hover align-items-lg-center ml-auto">
+                        <div class="navbar-nav navbar-nav-hover align-items-lg-center ml-auto heart">
                             <nav id="navigation" class="style-1">
                                 <ul id="responsive">
                                     <li>
@@ -64,95 +76,32 @@
 
                                 </ul>
                             </nav>
+                            <a asp-controller="Restaurant" asp-action="Index">
+                                <i class="fa fa-heart-o heart"></i>
 
+
+                                @if (BasketCount != 0)
+                                 {
+                                        <span class="position-absolute  start-100 translate-middle badge badge-pill bg-danger">
+                                            <span>@BasketCount</span>
+                                        </span>
+                                 }
+                               
+                                </a>
                         </div>
                     </div>
                 </div>
             </nav>
         </header>
-        @if (ViewBag.Name == "Home")
-        {
-            <div class="position-relative">
-                <section class="section section-lg section-hero section-shaped">
-                    <div class="shape shape-style-1 shape-primary">
-                        <span class="span-150"></span>
-                        <span class="span-50"></span>
-                        <span class="span-50"></span>
-                        <span class="span-75"></span>
-                        <span class="span-100"></span>
-                        <span class="span-75"></span>
-                        <span class="span-50"></span>
-                        <span class="span-100"></span>
-                        <span class="span-50"></span>
-                        <span class="span-100"></span>
-                        <div class="overlay-bg"></div>
-                    </div>
-                    <div class="container shape-container d-flex align-items-center py-lg">
-                        <div class="main-search-inner">
-                            <h2 class="text-white display-2">Find Nearby Attractions</h2>
-                            <h4 class="text-white">Expolore top-rated attractions, activities and more</h4>
-                            <div class="main-search-input">
-                                <div class="main-search-input-item">
-                                    <input type="text" placeholder="What are you looking for?" value="" />
-                                </div>
-                                <div class="main-search-input-item location">
-                                    <div id="autocomplete-container">
-                                        <input id="autocomplete-input" type="text" placeholder="Location">
-                                    </div>
-                                    <a href="#"><i class="fa fa-map-marker"></i></a>
-                                </div>
-
-                                <a href="#" class="btn main-search-btn btn-radius btn-lg btn-white">
-                                    <span class="btn-inner--text">Search</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- SVG separator -->
-                    <div class="separator separator-bottom separator-skew zindex-100">
-                        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                            <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
-                        </svg>
-                    </div>
-                </section>
-            </div>
-        }
-        else
-        {
-                <div id="titlebar" class="gradient">
-                    <div class="title-bar-inner">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h2>Blog Listing</h2>
-                                    <span>Explore your search places</span>
-                                    <!-- Breadcrumbs -->
-                                    <nav id="breadcrumbs">
-                                        <ul>
-                                            <li><a>Home</a></li>
-                                            <li>Blog</li>
-                                            <li>List</li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="title-overlay"></div>
-                </div>
-        }
-
-
-
                 @RenderBody();
 
                 <div id="footer" class="sticky-footer bg-primary">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-5 col-sm-6">
-                                <img class="footer-logo img-fluid" src="assets/images/@Model.Setting.Logo" alt="list-logo">
+                               <a asp-controller="Home" asp-action="Index"> <img  class="footer-logo img-fluid" src="~/assets/images/@Model.Setting.Logo" alt="list-logo"></a>
                                 <br><br>
-                                <p class="text-white">Morbi convallis bibendum urna ut viverra. Maecenas quis consequat libero, a feugiat eros. Nunc ut lacinia tortor morbi ultricies laoreet ullamcorper phasellus semper.</p>
+                                <p class="text-white">@Model.Setting.Description</p>
                                 <div class="text-widget text-white">
                                     <span class="text-white">@Model.Setting.Address1</span> <br> Phone: <span class="text-white">@Model.Setting.Phone1</span><br> E-Mail:
                                     <span class="text-white"> <a href="#" class="text-white">@Model.Setting.Email1</a> </span><br>
@@ -160,7 +109,7 @@
                                 <div class="mt-4">
                                     @foreach (var social in Model.Socials)
                                      {
-                                        <a target="_blank" href="https://twitter.com/" class="btn btn-neutral btn-icon-only btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow us">
+                                        <a target="_blank" href="@social.Link" class="btn btn-neutral btn-icon-only btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow us">
                                             <i class="@social.Icon"></i>
                                         </a>
                                      }
@@ -194,22 +143,22 @@
             <!-- Scripts
          ================================================== -->
             <!-- #region Scripts -->
-            <script type="text/javascript" src="assets/scripts/jquery-2.2.0.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/popper.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/bootstrap.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/mmenu.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/chosen.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/slick.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/rangeslider.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/magnific-popup.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/waypoints.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/counterup.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/jquery-ui.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/tooltips.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/jquery.countdown.min.js"></script>
-            <script type="text/javascript" src="assets/scripts/bootstrap-datepicker.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/jquery-2.2.0.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/popper.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/bootstrap.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/mmenu.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/chosen.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/slick.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/rangeslider.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/magnific-popup.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/waypoints.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/counterup.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/jquery-ui.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/tooltips.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/jquery.countdown.min.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/bootstrap-datepicker.min.js"></script>
             <script src="https://kit.fontawesome.com/6ff3f42b45.js" crossorigin="anonymous"></script>
-            <script type="text/javascript" src="assets/scripts/custom.js"></script>
+            <script type="text/javascript" src="~/assets/scripts/custom.js"></script>
             <!-- #endregion -->
 </body>
 

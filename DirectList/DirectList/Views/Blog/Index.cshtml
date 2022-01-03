@@ -4,6 +4,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div id="titlebar" class="gradient">
+    <div class="title-bar-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>@Model.Banner.Title</h2>
+                    <span>Explore your search places</span>
+                    <!-- Breadcrumbs -->
+                    <nav id="breadcrumbs">
+                        <ul>
+                            <li><a>Home</a></li>
+                            <li>@Model.Banner.Page</li>
+                            <li>List</li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="title-overlay"></div>
+</div>
+
+
 <!-- Content -->
 			<div class="content">
 				<div class="container">
@@ -74,18 +98,13 @@
                                     <div class="widget margin-top-40">
                                         <h3 class="margin-bottom-25">Social</h3>
                                         <div class="btn-wrapper">
-                                            <a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow us">
-                                                <i class="fa fa-twitter"></i>
-                                            </a>
-                                            <a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg" data-toggle="tooltip" data-original-title="Like us">
-                                                <i class="fa fa-facebook-square"></i>
-                                            </a>
-                                            <a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-dribbble btn-lg btn-round" data-toggle="tooltip" data-original-title="Follow us">
-                                                <i class="fa fa-dribbble"></i>
-                                            </a>
-                                            <a target="_blank" href="#" class="btn btn-neutral btn-icon-only btn-github btn-round btn-lg" data-toggle="tooltip" data-original-title="Star on Github">
-                                                <i class="fa fa-github"></i>
-                                            </a>
+                                            @foreach (var social in Model.Socials)
+                                             {
+                                                <a target="_blank" href="@social.Link" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow us">
+                                                    <i class="@social.Icon"></i>
+                                                </a>
+                                             }
+
                                         </div>
                                     </div>
                                     <!-- Widget / End-->
