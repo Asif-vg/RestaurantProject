@@ -87,12 +87,12 @@
 
                                             @foreach (var tag in restaurant.TagToRestaurants)
                                              {
-                                                <div class="mt-3"><span class="badge badge-pill badge-primary text-uppercase badge-cat">@tag.Tag.Name</span></div>
+                                                <div class="mt-3"><a asp-controller="Restaurant" asp-action="Index" asp-route-tagid="@tag.TagId" style="cursor:pointer;"><span class="badge badge-pill badge-primary text-uppercase badge-cat">@tag.Tag.Name</span></a></div>
 
                                              }
                                         </div>
                                         <a asp-controller="Restaurant" asp-action="AddToCart" asp-route-id="@restaurant.Id">
-                                            <span class="round-pill like-banner d-block bg-primary @(Model.AddToCart!=null?Model.AddToCart.Any(a => a==restaurant.Id.ToString())==true?"myadded":"":"") "><i class="fa fa-heart-o"></i></span>
+                                            <span class="round-pill like-banner d-block bg-primary @(Model.AddToCart!=null?Model.AddToCart.Any(a => a==restaurant.Id.ToString())?"myadded":"":"") "><i class="fa fa-heart-o"></i></span>
                                             
 
 

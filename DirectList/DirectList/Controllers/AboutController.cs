@@ -29,7 +29,7 @@ namespace DirectList.Controllers
             {
                 Setting = _context.Settings.FirstOrDefault(),
                 Socials = _context.Socials.ToList(),
-                Abouts = _context.Abouts.ToList(),
+                About = _context.Abouts.FirstOrDefault(),
                 Steps = _context.Steps.ToList(),
                 Banner = _context.Banner.FirstOrDefault(b => b.Page == "About")
             };

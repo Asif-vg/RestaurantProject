@@ -22,6 +22,7 @@ namespace DirectList.Controllers
         }
         public IActionResult Index(VmSearch search)
         {
+
             List<Restaurant> restaurants = _context.Restaurants.Include(ri=> ri.RestaurantImages)
                                                             .Include(tr => tr.TagToRestaurants).ThenInclude(t => t.Tag)
                                                            .Include(fr => fr.FeatureToRestaurants).ThenInclude(f => f.RestaurantFeatures)
@@ -62,12 +63,17 @@ namespace DirectList.Controllers
                 Banner=_context.Banner.FirstOrDefault(b=>b.Page=="Restaurant"),
             };
             vmRestaurant.Restaurants = _context.Restaurants.Include(bc => bc.RestaurantImages)
-                                    .Where(b => (search.searchData != null ? b.Name.Contains(search.searchData) : true)).ToList();
+                                                          
+                                    .Where(b => (search.searchData != null ? b.Name.Contains(search.searchData) : true) &&
+                                                (search.tagid != null ? b.TagToRestaurants.Any(tr=>tr.TagId==search.tagid) : true)
+                                                ).ToList();
+                                                
             return View(vmRestaurant);
         }
 
         public IActionResult Details(int? id)
         {
+           
             Restaurant restaurant1 = null;
             List<RestaurantComment> restaurantComments = _context.RestaurantComments.OrderByDescending(bc => bc.CreatedDate).Where(i => i.RestaurantId == id).ToList();
             if (id != null)

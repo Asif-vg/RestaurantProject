@@ -8,5 +8,7 @@ namespace DirectList.ViewModels
     public class VmSearch
     {
         public string searchData { get; set; }
+        public int? tagid { get; set; }
+
     }
 }

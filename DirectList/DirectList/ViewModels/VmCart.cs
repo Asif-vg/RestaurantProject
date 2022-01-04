@@ -9,8 +9,7 @@ namespace DirectList.ViewModels
     public class VmCart :VmLayout
     {
         public List<Restaurant> Restaurants { get; set; }
-        public Setting Setting { get; set; }
-        public List<Social> Socials { get; set; }
+       
 
     }
 }

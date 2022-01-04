@@ -44,7 +44,8 @@ namespace DirectList.Controllers
             VmContact model1 = new VmContact()
             {
                 Setting = _context.Settings.FirstOrDefault(),
-                Socials = _context.Socials.ToList()
+                Socials = _context.Socials.ToList(),
+                Banner = _context.Banner.FirstOrDefault(b => b.Page == "Contact")
             };
 
             return View("Index", model1);

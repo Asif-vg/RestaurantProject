@@ -56,7 +56,7 @@
                         <p>@Model.Restaurant.Address</p>
                         @foreach (var tag in Model.Restaurant.TagToRestaurants)
                         {
-                            <span class="badge badge-pill badge-info text-uppercase mr-2">@tag.Tag.Name</span>
+                            <a asp-controller="Restaurant" asp-action="Index" asp-route-tagid="@tag.TagId" style="cursor:pointer;"><span class="badge badge-pill badge-info text-uppercase mr-2 ">@tag.Tag.Name</span></a>
 
                         }
                     </div>
@@ -164,6 +164,7 @@
                                     }
 
                                 </div>
+
                                 <div id="add-review" class="add-review-box mt-4">
                                     <!--Add Review-->
                                     <h3 class="listing-desc-headline mb-4">Add Review</h3>

@@ -66,38 +66,35 @@
         <div class="block-space bg-secondary">
             <div class="container">
                 <div class="row row-grid align-items-center">
-                    @foreach (var about in Model.Abouts)
-                    {
-                        <div class="col-md-6">
-                            <div class="card bg-default shadow border-0">
-                                <img src="~/Uploads/@about.Image" class="card-img-top" alt="image">
-                                <blockquote class="card-blockquote">
-                                    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="svg-bg">
-                                        <polygon points="0,52 583,95 0,95" class="fill-default"></polygon>
-                                        <polygon points="0,42 583,95 683,0 0,95" opacity=".2" class="fill-default"></polygon>
-                                    </svg>
-                                    <h4 class="display-3 font-weight-bold text-white">
-                                        @about.Title
-                                    </h4>
-                                    <p class="lead text-italic text-white">
-                                        @about.Content
-                                    </p>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="pl-md-5">
-                                <div class="icon icon-lg icon-shape icon-shape-warning shadow rounded-circle mb-5">
-                                    <i class="fa fa-info"></i>
-                                </div>
-                                <h3>About Us</h3>
-                                <p class="lead">
-                                    @Html.Raw(about.Content2)
+                    <div class="col-md-6">
+                        <div class="card bg-default shadow border-0">
+                            <img src="~/Uploads/@Model.About.Image" class="card-img-top" alt="image">
+                            <blockquote class="card-blockquote">
+                                <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="svg-bg">
+                                    <polygon points="0,52 583,95 0,95" class="fill-default"></polygon>
+                                    <polygon points="0,42 583,95 683,0 0,95" opacity=".2" class="fill-default"></polygon>
+                                </svg>
+                                <h4 class="display-3 font-weight-bold text-white">
+                                    @Model.About.Title
+                                </h4>
+                                <p class="lead text-italic text-white">
+                                    @Model.About.Content
                                 </p>
-                                <a asp-controller="Home" asp-action="Index" class="font-weight-bold text-warning mt-5">Explore Your Places</a>
-                            </div>
+                            </blockquote>
                         </div>
-                    }
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pl-md-5">
+                            <div class="icon icon-lg icon-shape icon-shape-warning shadow rounded-circle mb-5">
+                                <i class="fa fa-info"></i>
+                            </div>
+                            <h3>About Us</h3>
+                            <p class="lead">
+                                @Html.Raw(Model.About.Content2)
+                            </p>
+                            <a asp-controller="Home" asp-action="Index" class="font-weight-bold text-warning mt-5">Explore Your Places</a>
+                        </div>
+                    </div>
 
                 </div>
             </div>

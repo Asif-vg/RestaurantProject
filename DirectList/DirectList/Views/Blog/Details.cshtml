@@ -157,10 +157,10 @@
                                     <li>
                                         <div class="widget-content">
                                             <div class="widget-thumb">
-                                                <a href="pages-blog-post.html"><img src="~/Uploads/@blog.Image" alt="image"></a>
+                                                <a asp-controller="Blog" asp-action="Details" asp-route-id="@blog.Id"><img src="~/Uploads/@blog.Image" alt="image"></a>
                                             </div>
                                             <div class="widget-text">
-                                                <h5><a asp-controller="Blog" asp-action="Details">@Html.Raw(blog.Content.Length > 15 ? blog.Content.Substring(0, 15) + "..." : blog.Content) </a></h5>
+                                                <h5><a asp-controller="Blog" asp-action="Details"  asp-route-id="@blog.Id">@blog.Title </a></h5>
                                                 <span>@blog.CreatedDate.ToString("MMMM dd yyyy")</span>
                                             </div>
                                             <div class="clearfix"></div>

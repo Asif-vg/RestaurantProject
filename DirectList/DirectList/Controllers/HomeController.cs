@@ -103,28 +103,39 @@ namespace DirectList.Controllers
 
 
 
-        //public IActionResult Cart(VmCart model)
-        //{
-        //    string oldData = Request.Cookies["cart"];
+        public IActionResult Cart(VmCart model)
+        {
+            
+            string oldData = Request.Cookies["cart"];
 
-        //    if (!string.IsNullOrEmpty(oldData))
-        //    {
-        //        List<string> dataList = oldData.Split("-").ToList();
-        //        model.Restaurants = _context.Restaurants.Include(ri => ri.RestaurantImages)
-        //                                         .Where(p => dataList.Any(d => d == p.Id.ToString())).ToList();
-        //    }
+            if (!string.IsNullOrEmpty(oldData))
+            {
+                List<string> dataList = oldData.Split("-").ToList();
+                model.Restaurants = _context.Restaurants.Include(ri => ri.RestaurantImages)
+                                                        .Include(tr => tr.TagToRestaurants).ThenInclude(t => t.Tag)
+                                                 .Where(p => dataList.Any(d => d == p.Id.ToString())).ToList();
+            }
 
-        //    Setting setting = _context.Settings.FirstOrDefault();
-        //    List<Social> social = _context.Socials.ToList();
-
-        //    VmCart model1 = new VmCart()
-        //    {
-        //        Setting = setting,
-        //        Socials = social
-        //    };
-
-        //    return View(model1);
-        //}
+            Setting setting = _context.Settings.FirstOrDefault();
+            List<Social> social = _context.Socials.ToList();
+            
+            VmCart model1 = new VmCart()
+            {
+                Setting = setting,
+                Socials = social,
+                Restaurants=model.Restaurants,
+                Banner = _context.Banner.FirstOrDefault(b => b.Page == "Restaurant")
+            };
+            if (model1==null)
+            {
+                return RedirectToAction("Index", model.Restaurants);
+            }
+            else
+            {
+                return View(model1);
+            }
+           
+        }
 
 
     }

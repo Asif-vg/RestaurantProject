@@ -78,10 +78,10 @@
                                                 <li>
                                                     <div class="widget-content">
                                                         <div class="widget-thumb">
-                                                            <a href="#"><img src="~/Uploads/@blog.Image" alt="image"></a>
+                                                            <a asp-controller="Blog" asp-action="Details"  asp-route-id="@blog.Id"><img src="~/Uploads/@blog.Image" alt="image"></a>
                                                         </div>
                                                         <div class="widget-text">
-                                                            <h5><a href="#">@blog.Title </a></h5>
+                                                            <h5><a asp-controller="Blog" asp-action="Details"  asp-route-id="@blog.Id">@blog.Title </a></h5>
                                                             <span>@blog.CreatedDate.ToString("dd MMMM yyy")</span>
                                                         </div>
                                                         <div class="clearfix"></div>

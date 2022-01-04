@@ -8,7 +8,9 @@ namespace DirectList.ViewModels
 {
     public class VmAbout :VmLayout
     {
-        public List<About> Abouts { get; set; }
+        
+        public About About { get; set; }
+
         public List<StepStart> Steps { get; set; }
     }
 }
